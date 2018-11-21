@@ -1,0 +1,30 @@
+Elasticsearch Commands:
+
+
+#Check snapshot status
+curl -XGET localhost:9200/_snapshot/Backups/_current?pretty=true
+
+#Check indicies
+curl -XGET localhost:9200/_cat/indices?pretty=true
+
+
+# Snapshots
+# Taken from https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+
+# First you need to edit your securityonion.conf file and add the line:
+# Also on https://github.com/Security-Onion-Solutions/security-onion/wiki/Elasticsearch
+ELASTICSEARCH_OPTIONS="-v /{Name}:/{Location}"
+#In my case
+ELASTICSEARCH_OPTIONS="-v /Backups:/Backups"
+
+# The below option also needs to be put into the elasticsearch.yml file:
+path.repo: <your file path here>
+
+
+#Setting the backup repository
+# Change my_backup to the whatever you want to call your repository
+# Change "my_backup_location" To the backup location specified in your securityonion.conf file
+
+
+curl -X PUT "localhost:9200/_snapshot/my_backup" -H 'Content-Type: application/json' -d'{"type": "fs","settings": {"location": "my_backup_location","compress": true}}'
+
