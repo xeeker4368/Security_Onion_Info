@@ -5,31 +5,31 @@ emerging_threat_rule_list = {}
 original_sid = re.compile('sid:[0-9]{5,8};')
 
 try:
-    os.remove('/home/localadmin/poor_reputation_list.rules')
+    os.remove('/etc/nsm/rules/CUSTOM_poor_reputation_list.txt')
 except OSError:
     pass
 
 try:
-    os.remove("/home/localadmin/pass_IP_list.rules")
+    os.remove("/etc/nsm/rules/CUSTOM_pass_IP_list.txt")
 except OSError:
     pass
 
 try:
-    os.remove("/home/localadmin/bidirection_IP_list.rules")
+    os.remove("/etc/nsm/rules/CUSTOM_bidirection_IP_list.txt")
 except OSError:
     pass
 
 try:
-    os.remove("/home/localadmin/outbound_IP_list.rules")
+    os.remove("/etc/nsm/rules/CUSTOM_outbound_IP_list")
 except OSError:
     pass
 
 
 emerging_threat_rule_list = open("/etc/nsm/rules/downloaded.rules", "r")
-IP_list = open("/home/localadmin/poor_reputation_list.txt", "w")
-pass_IP_list = open("/home/localadmin/pass_IP_list.txt", "w")
-bidirection_IP_list = open("/home/localadmin/bidirection_IP_list.txt", "w")
-outbound_IP_list = open("/home/localadmin/outbound_IP_list.txt", "w")
+IP_list = open("/etc/nsm/rules/CUSTOM_poor_reputation_list.txt", "w")
+pass_IP_list = open("/etc/nsm/rules/CUSTOM_pass_IP_list.txt", "w")
+bidirection_IP_list = open("/etc/nsm/rules/CUSTOM_bidirection_IP_list.txt", "w")
+outbound_IP_list = open("/etc/nsm/rules/CUSTOM_outbound_IP_list.txt", "w")
 
 for threat_rule_lines in emerging_threat_rule_list:
     threat_rule_lines = threat_rule_lines.rstrip('\n')
@@ -38,7 +38,7 @@ for threat_rule_lines in emerging_threat_rule_list:
 #        IP_list.write("\n")
 #        print(threat_rule_lines)
 
-IP_list = open("/home/localadmin/poor_reputation_list.rules", "r+")
+IP_list = open("/etc/nsm/rules/CUSTOM_poor_reputation_list.txt", "r+")
 for pass_lines in IP_list:
     pass_lines = pass_lines.replace("alert", "pass")
     pass_lines = pass_lines.replace('msg:"ET CINS Active Threat', 'msg:"CUSTOM PASS - ET CINS Active Threat')
@@ -56,7 +56,7 @@ for pass_lines in IP_list:
 #   print(pass_lines)
 print("pass_line")
 
-IP_list = open("/home/localadmin/poor_reputation_list.rules", "r+")
+IP_list = open("/etc/nsm/rules/CUSTOM_poor_reputation_list.txt", "r+")
 for bidirection_IP in IP_list:
     bidirection_IP = bidirection_IP.replace("->", "<>")
     bidirection_IP = bidirection_IP.replace('msg:"ET CINS Active Threat', 'msg:"CUSTOM BIDIRECTIONAL - ET CINS Active Threat')
@@ -72,7 +72,7 @@ for bidirection_IP in IP_list:
     bidirection_IP_list.write(bidirectional_IP_SID_list + '\n')
 print("bidirection_IP_list")
 
-IP_list = open("/home/localadmin/poor_reputation_list.rules", "r+")
+IP_list = open("/etc/nsm/rules/CUSTOM_poor_reputation_list.txt", "r+")
 for outbound_IP in IP_list:
     outbound_IP = outbound_IP.rstrip('\n')
     outbound_IP = outbound_IP.replace("-> $HOME_NET any ", "")
@@ -87,7 +87,7 @@ for outbound_IP in IP_list:
 #    print(bidirection_IP_list)
 print("outbound_IP_list")
 
-#pass_IP_list = open("/home/localadmin/pass_IP_list.txt", "r+")
+#pass_IP_list = open("/etc/nsm/rules/pass_IP_list.txt", "r+")
 #original_sid = re.compile('sid:[0-9]{5,8};')
 #for pass_IP_SID_list in pass_IP_list:
 #    pass_sid = re.search(r"sid:[0-9]{5,8};", pass_IP_SID_list)
